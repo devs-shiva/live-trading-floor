@@ -1,78 +1,95 @@
 
 
-# WEETOO — Live Trading Broadcasting Platform Landing Page
+# Enhance WEETOO to Feel Like a True Broadcasting Platform
 
-## Vision
-A dark, immersive, energy-filled landing page that feels like **Twitch for traders** — not a corporate fintech site. Users should immediately feel that real trading is happening live, right now.
+Taking inspiration from the reference images (GamXe gaming platform, CineStream), the current page needs more structure and visual richness to truly feel like a broadcasting/streaming platform for traders.
 
----
+## What Changes
 
-## Page Structure (Top to Bottom)
+### 1. Navigation Bar Upgrade
+The current Market Pulse Bar combines the logo with market data. We'll add a proper navigation section with platform links (Live, Top Traders, Categories, Leaderboard) and a search bar, similar to how Twitch/the reference images have structured navigation. The market data ticker stays but moves into a slim secondary bar below the nav.
 
-### 1. Sticky Market Pulse Bar
-- Fixed dark bar at the top (~60-70px) with real-time-style animated data
-- **Total Payback** (animated counting number), **Liquidation data**, **Long vs Short ratio** (progress bar), **Fear & Greed** mini gauge
-- Numbers update with subtle glow effects (green for positive, red for negative)
-- Bloomberg Terminal aesthetic
+### 2. Featured Trader Spotlight
+Inspired by the large hero card in the GamXe reference — add a featured/spotlight section showing the top-performing live trader in a larger, more prominent card. This replaces the current "WE ARE TRADERS" headline section with something more dynamic:
+- Large featured card showing the best-performing trader right now
+- Their chart displayed bigger with more detail
+- Viewer count, P&L, and live duration prominently shown
+- The "WE ARE TRADERS" tagline becomes a smaller overlay/subtitle
+- CTA buttons remain but are integrated into this section
 
-### 2. Compact Hero Headline
-- Bold, minimal headline: **"WE ARE TRADERS."** or **"Trade Together. Live."**
-- Subtle glow/gradient text effect — no paragraph explanations
-- Two CTA buttons with neon border styling:
-  - **"Enter Live Floor"** (primary)
-  - **"Start Broadcasting"** (secondary)
-- Takes minimal vertical space — NOT a traditional hero banner
+### 3. Category Filter Tabs
+Add filter tabs above the trading room grid (like "Top Trending" section in the references):
+- "Hot Now" / "Top Gainers" / "Most Watched" / "New Streams"
+- Pill-shaped tab selectors with the gold accent color
+- Navigation arrows for horizontal scrolling on mobile
 
-### 3. LIVE Trading Room Grid (The True Hero)
-- **Desktop:** 4-column grid, 2 rows visible above fold (8 rooms)
-- **Tablet:** 3 columns
-- **Mobile:** 2 columns, at least 4 visible without scrolling
+### 4. Left Sidebar with Category Icons (Desktop)
+Inspired by the GamXe left sidebar with icon buttons:
+- Vertical icon sidebar on desktop showing trading categories (Crypto, Forex, Stocks, Futures, Options)
+- Each icon is a small circular button
+- Collapses/hides on tablet and mobile
+- Adds the "platform navigation" feel
 
-**Each Trading Room Card includes:**
-- Chart thumbnail (styled like real trading charts)
-- Trader name & avatar
-- Viewer count with eye icon
-- Live duration (e.g., "2h 15m")
-- Asset tag (BTC, ETH, etc.)
-- **Animated LIVE badge** — red pill shape with blinking dot and pulse animation
+### 5. Right Sidebar - Top Traders (Desktop)
+Inspired by the GamXe right sidebar with avatar circles:
+- Show top 5-6 live traders as circular avatars on the right edge
+- Each has a green "online" dot
+- Clicking scrolls to their card in the grid
+- Hides on smaller screens
 
-**Card Interactions:**
-- Hover: slight scale-up (1.02-1.04) with soft glow/shadow
-- Subtle shimmer effect on chart thumbnail
+### 6. Richer Trading Room Cards
+- Make the chart thumbnails taller (more visual impact)
+- Add a subtle gradient overlay at the bottom of charts for text readability
+- Show a "rank" or "hot" badge on top performers
+- Add a thin colored border glow on hover (green for profit, red for loss)
 
----
-
-## Design Language
-- **Theme:** Dark immersive (deep black/dark navy base)
-- **Accent colors:** Neon green (profit), Red (live/loss), Gold (brand premium)
-- **Typography:** Large, bold, minimal — no walls of text
-- **Energy:** Dense but structured, like a broadcasting platform
-
-## Motion & Animation
-- LIVE badge pulse animation (CSS-based, performant)
-- Animated counters in the market bar
-- Subtle hover lift on cards
-- Light scroll-based reveal animations
-- No heavy animations that impact performance
-
-## Mobile Experience
-- Feels like a live content app (TikTok Live / YouTube Live grid)
-- Compact sticky data bar
-- Grid-first layout, no big headers
-- Larger LIVE badges, thumb-friendly card sizing
+### 7. "Top Trending" Section Header
+Add a styled section header above the grid with:
+- Bold "Top Trending" or "Live Now" heading
+- Filter tabs inline
+- Carousel arrows for potential horizontal scroll view
 
 ---
 
-## What's Included
-- Fully responsive landing page (desktop, tablet, mobile)
-- Mock data for 8+ live trading rooms with varied traders, assets, and viewer counts
-- Animated market pulse bar with mock real-time data
-- Performant CSS animations for LIVE badges and hover effects
-- Dark theme with neon accent color system
+## Technical Details
 
-## What's NOT Included (Future Phases)
-- Backend/real-time data integration
-- Actual video streaming functionality
-- User authentication or account features
-- Additional pages beyond the landing page
+### New Components
+- `NavBar.tsx` - Platform navigation with links, search, and user area
+- `FeaturedTrader.tsx` - Large spotlight card for the top performer
+- `CategorySidebar.tsx` - Left icon sidebar (desktop only)
+- `TopTradersSidebar.tsx` - Right avatar sidebar (desktop only)
+- `FilterTabs.tsx` - Category filter tabs for the grid
+
+### Modified Components
+- `MarketPulseBar.tsx` - Slim down to just a data ticker, move nav elements out
+- `HeroHeadline.tsx` - Replace with FeaturedTrader spotlight
+- `TradingRoomCard.tsx` - Taller charts, gradient overlay, glow borders
+- `TradingRoomGrid.tsx` - Add filter tabs, section header, adjust layout for sidebars
+- `Index.tsx` - New layout with sidebars flanking the main content
+- `mockData.ts` - Add categories, rank data, and a featured trader flag
+
+### Layout Structure (Desktop)
+```text
++--------------------------------------------------+
+|  NavBar (Logo | Links | Search | Login)          |
++--------------------------------------------------+
+|  Market Pulse Ticker (slim data strip)           |
++--+-------------------------------------------+--+
+|  |  Featured Trader Spotlight (wide card)    |  |
+|S |  with CTA buttons overlay                 |T |
+|I |-------------------------------------------|O |
+|D |  "Live Now"  [Hot] [Top Gainers] [New]    |P |
+|E |-------------------------------------------|  |
+|B |  Trading Room Grid (4 cols)               |T |
+|A |  [ ] [ ] [ ] [ ]                          |R |
+|R |  [ ] [ ] [ ] [ ]                          |A |
+|  |                                           |D |
++--+-------------------------------------------+--+
+```
+
+### CSS/Animation Additions
+- Card border glow animation on hover (green/red based on P&L)
+- Featured card entrance animation
+- Tab underline slide animation
+- Sidebar icon hover pulse
 
