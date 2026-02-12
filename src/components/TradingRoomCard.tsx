@@ -1,12 +1,18 @@
 import type { TradingRoom } from "@/data/mockData";
 import ChartThumbnail from "./ChartThumbnail";
-import { Eye } from "lucide-react";
+import { Eye, Flame } from "lucide-react";
 
 export default function TradingRoomCard({ room }: { room: TradingRoom }) {
   const positive = room.pnl >= 0;
 
   return (
-    <article className="group relative cursor-pointer overflow-hidden rounded-xl border border-border bg-card transition-all duration-200 hover:scale-[1.03] hover:border-muted-foreground/30 hover:shadow-[0_4px_30px_hsl(0_0%_0%/0.5)]">
+    <article
+      className={`group relative cursor-pointer overflow-hidden rounded-xl border bg-card transition-all duration-200 hover:scale-[1.03] ${
+        positive
+          ? "border-border hover:border-neon-green/30 hover:shadow-[0_0_20px_hsl(142_72%_50%/0.15)]"
+          : "border-border hover:border-neon-red/30 hover:shadow-[0_0_20px_hsl(0_72%_51%/0.15)]"
+      }`}
+    >
       {/* LIVE badge */}
       <div className="absolute left-2 top-2 z-10 flex items-center gap-1.5 rounded-full bg-neon-red/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
         <span className="relative flex h-2 w-2">
@@ -16,19 +22,28 @@ export default function TradingRoomCard({ room }: { room: TradingRoom }) {
         LIVE
       </div>
 
+      {/* Hot badge */}
+      {room.isHot && (
+        <div className="absolute left-2 top-8 z-10 flex items-center gap-1 rounded-full bg-gold/20 px-1.5 py-0.5 text-[9px] font-bold text-gold backdrop-blur-sm">
+          <Flame className="h-2.5 w-2.5" />
+          HOT
+        </div>
+      )}
+
       {/* Asset tag */}
       <div className="absolute right-2 top-2 z-10 rounded bg-secondary/80 px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground backdrop-blur-sm">
         {room.asset}
       </div>
 
-      {/* Chart */}
-      <div className="bg-surface">
+      {/* Chart — taller */}
+      <div className="relative h-[80px] bg-surface md:h-[100px]">
         <ChartThumbnail data={room.chartData} positive={positive} />
+        {/* Bottom gradient for readability */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-card to-transparent" />
       </div>
 
       {/* Info */}
       <div className="flex items-center gap-2.5 p-2.5">
-        {/* Avatar */}
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary text-xs font-bold text-foreground">
           {room.traderInitials}
         </div>
